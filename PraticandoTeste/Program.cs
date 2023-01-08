@@ -31,7 +31,7 @@ namespace PraticandoTeste
             {
                 banco.SaveChanges();
                 Console.Clear();
-                Console.WriteLine("1-Cadastrar Autor\n2-Cadastrar Livro\n3-Cadastrar Cliente\n4-Emprestar Livro\n0-Sair\nOpcao: ");
+                Console.WriteLine("1-Cadastrar Autor\n2-Cadastrar Livro\n3-Cadastrar Cliente\n4-Emprestar Livro\n5-Consutar Livros Alugados\n0-Sair\nOpcao: ");
                 var opc = Console.ReadLine();
 
                 switch (opc)
@@ -51,6 +51,9 @@ namespace PraticandoTeste
                     case "4":
                         AluguelLivro(banco);
                         break;
+                    case "5":
+                        ConsultarLivrosAlugados(banco);
+                        break;
                     default:
                         Console.WriteLine("Opcao Incorreta");
                         break;
@@ -60,8 +63,11 @@ namespace PraticandoTeste
             }
         }
        
-        static void ConsultarLivrosAlugados(Context banco, int idCliente)
+        static void ConsultarLivrosAlugados(Context banco)
         {
+            Console.WriteLine("Digite o ID do cliente: ");
+             int idCliente = int.Parse(Console.ReadLine());
+
             var cliente = banco.Clientes.Where(x => x.Id == idCliente).Include(x => x.Livros).AsNoTracking().ToList();
 
             var livroAlugado =
